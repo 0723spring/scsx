@@ -128,6 +128,30 @@
 - 可以从启动后端、打开前端、上传图片到展示结果完整演示。
 - PPT 中包含系统背景、架构、流程、关键实现、效果展示和总结。
 
+### 阶段七：旋转鲁棒性与图像预处理增强
+
+目标：在主流程稳定后，增加轻微倾斜图片的处理能力。
+
+需要完成：
+
+- 生成 rotated 数据集。
+- rotated 数据单独放在 `dataset/generated/rotated/`。
+- rotated 标签放在 `dataset/labels/labels_rotated.json`。
+- rotated 数据不混入主 train/val/test。
+- 新增 `backend/preprocess.py`。
+- 实现轻微倾斜校正。
+- 在 `/api/recognize` 中增加 `enable_preprocess` 参数。
+- 前端增加“图像校正”开关。
+- 使用 rotated 图片测试校正前后的 OCR 和字段提取效果。
+
+验收标准：
+
+- 至少有 60 张 rotated 测试图片。
+- rotated 标签中 `metadata.boxes_valid=false`。
+- 后端可以在启用预处理时输出校正后的图片或脱敏图。
+- 前端可以传入是否启用预处理。
+- 答辩时可以说明 rotated 数据用于鲁棒性测试，不影响主流程演示。
+
 ## 3. 推荐开发顺序
 
 严格建议按以下顺序推进：
@@ -144,7 +168,8 @@
 9. 虚拟面单生成脚本
 10. PaddleOCR 接入
 11. 优化字段提取和打码效果
-12. 文档、截图、PPT、答辩稿
+12. 旋转鲁棒性测试和图像校正
+13. 文档、截图、PPT、答辩稿
 ```
 
 ## 4. 代码协作规则

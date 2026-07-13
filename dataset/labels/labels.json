@@ -1,0 +1,332 @@
+[
+  {
+    "image": "generated/waybill_0001.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "81793571802948",
+      "destination_code": "0595",
+      "receiver_name": "吕俊峰",
+      "receiver_phone": "13687105423",
+      "receiver_address": "重庆市重庆市渝北区金开大道168号星光公寓6栋2100室",
+      "sender_name": "吕海燕",
+      "sender_phone": "16696923850",
+      "sender_address": "陕西省咸阳市秦都区人民西路120号秦风小区7栋1505室",
+      "item_name": "学习资料",
+      "quantity": 5,
+      "remark": "请电话联系",
+      "order_number": "07593059",
+      "order_time": "2026-07-13 11:28:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        285,
+        336,
+        564,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        1000,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        596
+      ],
+      "sender_address": [
+        160,
+        965,
+        398,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1066,
+        250,
+        1090
+      ],
+      "sender_phone": [
+        255,
+        1066,
+        411,
+        1090
+      ]
+    },
+    "metadata": {
+      "generated": true
+    }
+  },
+  {
+    "image": "generated/waybill_0002.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "1412654699108",
+      "destination_code": "027",
+      "receiver_name": "施洋",
+      "receiver_phone": "13640442929",
+      "receiver_address": "新疆维吾尔自治区乌鲁木齐市天山区解放北路68号雪莲小区1栋277室",
+      "sender_name": "周浩然",
+      "sender_phone": "16642416118",
+      "sender_address": "黑龙江省哈尔滨市南岗区学府路19号冰城家园10栋2528室",
+      "item_name": "文具",
+      "quantity": 4,
+      "remark": "注意防水",
+      "order_number": "96012248",
+      "order_time": "2026-07-13 15:21:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        295,
+        336,
+        554,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        1070,
+        545
+      ],
+      "receiver_name": [
+        160,
+        562,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        562,
+        488,
+        596
+      ],
+      "sender_address": [
+        160,
+        965,
+        407,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1066,
+        250,
+        1090
+      ],
+      "sender_phone": [
+        255,
+        1066,
+        411,
+        1090
+      ]
+    },
+    "metadata": {
+      "generated": true
+    }
+  },
+  {
+    "image": "generated/waybill_0003.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "06939218786354",
+      "destination_code": "0755",
+      "receiver_name": "孔明",
+      "receiver_phone": "13047885750",
+      "receiver_address": "重庆市重庆市渝北区金开大道170号星光公寓9栋226室",
+      "sender_name": "冯梓涵",
+      "sender_phone": "13067259087",
+      "sender_address": "四川省成都市武侯区天府三街63号锦城花园11栋2319室",
+      "item_name": "单肩包",
+      "quantity": 3,
+      "remark": "避免受潮",
+      "order_number": "69846835647",
+      "order_time": "2026-07-13 10:03:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        285,
+        336,
+        564,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        980,
+        506
+      ],
+      "receiver_name": [
+        160,
+        564,
+        250,
+        595
+      ],
+      "receiver_phone": [
+        320,
+        564,
+        488,
+        595
+      ],
+      "sender_address": [
+        160,
+        965,
+        398,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1066,
+        250,
+        1091
+      ],
+      "sender_phone": [
+        255,
+        1066,
+        411,
+        1091
+      ]
+    },
+    "metadata": {
+      "generated": true
+    }
+  },
+  {
+    "image": "generated/waybill_0004.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "62734054814893",
+      "destination_code": "0595",
+      "receiver_name": "何泽林",
+      "receiver_phone": "18875727943",
+      "receiver_address": "湖南省株洲市天元区泰山路61号湘水湾7栋1156室",
+      "sender_name": "华家豪",
+      "sender_phone": "15044962552",
+      "sender_address": "陕西省咸阳市秦都区人民西路152号秦风小区5栋2077室",
+      "item_name": "数据线",
+      "quantity": 1,
+      "remark": "请勿倒置",
+      "order_number": "40654120810",
+      "order_time": "2026-07-13 13:59:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        285,
+        336,
+        564,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        912,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        595
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        595
+      ],
+      "sender_address": [
+        160,
+        965,
+        398,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1066,
+        250,
+        1090
+      ],
+      "sender_phone": [
+        255,
+        1066,
+        411,
+        1090
+      ]
+    },
+    "metadata": {
+      "generated": true
+    }
+  },
+  {
+    "image": "generated/waybill_0005.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "934254504794682",
+      "destination_code": "0595",
+      "receiver_name": "魏若曦",
+      "receiver_phone": "13925287314",
+      "receiver_address": "江苏省无锡市滨湖区太湖大道108号湖景花园12栋729室",
+      "sender_name": "孙秀英",
+      "sender_phone": "13000399656",
+      "sender_address": "宁夏回族自治区银川市金凤区北京中路100号塞上雅居15栋1963室",
+      "item_name": "模型摆件",
+      "quantity": 4,
+      "remark": "请勿倒置",
+      "order_number": "368553958",
+      "order_time": "2026-07-13 10:59:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        275,
+        336,
+        574,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        1000,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        596
+      ],
+      "sender_address": [
+        160,
+        965,
+        407,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1066,
+        250,
+        1090
+      ],
+      "sender_phone": [
+        255,
+        1066,
+        411,
+        1090
+      ]
+    },
+    "metadata": {
+      "generated": true
+    }
+  }
+]

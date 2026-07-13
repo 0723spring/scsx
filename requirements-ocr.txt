@@ -1,0 +1,18 @@
+# OCR 扩展环境：接入 PaddleOCR 时再安装。
+# 建议先安装 requirements.txt，确认 MVP 能跑通后，再安装本文件。
+#
+# 安装命令：
+#   python -m pip install -r requirements-ocr.txt
+#
+# 注意：
+# 1. PaddleOCR 需要推理引擎。若使用默认 paddle_static 引擎，需要先按平台安装 PaddlePaddle。
+# 2. CPU 版 PaddlePaddle 官方示例：
+#      python -m pip install paddlepaddle==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
+# 3. GPU 版需要根据显卡驱动选择 cu118 或 cu126，详见 docs/05_environment.md。
+
+-r requirements.txt
+
+paddleocr>=3.7,<4.0
+
+# 可选：如果后续需要做图像预处理、旋转校正、形态学处理，再安装 OpenCV。
+opencv-python-headless>=4.10,<5.0

@@ -26,6 +26,9 @@
 - [后端接口定义](docs/02_api_spec.md)
 - [虚拟数据、OCR 与脱敏方案](docs/03_data_generation_and_ocr.md)
 - [开发流程与验收标准](docs/04_development_process.md)
+- [环境配置与依赖说明](docs/05_environment.md)
+- [Base 版本运行说明](docs/07_base_app_usage.md)
+- [当前进度与团队任务分工草案](docs/08_team_status_and_tasks.md)
 
 ## 推荐项目结构
 
@@ -74,3 +77,68 @@ express_waybill_ocr/
 - 基于 OCR box 的图片区域打码
 - 批量生成虚拟快递面单
 - 导出 JSON 或下载脱敏图片
+
+## 虚拟快递面单生成
+
+模板图片放置位置：
+
+```text
+dataset/templates/sf_blank_template.jpg
+```
+
+坐标配置文件：
+
+```text
+dataset/templates/template_config.json
+```
+
+生成预览调试图：
+
+```bash
+python scripts/generate_waybills.py --preview
+```
+
+预览图输出到：
+
+```text
+dataset/generated/template_preview.png
+```
+
+生成 20 张模拟面单：
+
+```bash
+python scripts/generate_waybills.py --count 20
+```
+
+生成正式 300 张数据集，包含 clean、augmented、train、val、test：
+
+```bash
+python scripts/generate_waybills.py --make-dataset --seed 20260713
+```
+
+生成 60 张轻微旋转鲁棒性测试集：
+
+```bash
+python scripts/generate_waybills.py --make-rotated --rotated-count 60 --seed 20260713
+```
+
+图片输出目录：
+
+```text
+dataset/generated/
+```
+
+标签文件：
+
+```text
+dataset/labels/labels.json
+```
+
+说明：
+
+- 所有姓名、电话、地址均为虚拟合成数据。
+- 模板中的 Logo、服务热线和条形码保持不变。
+- 本项目不做条形码解析，只对图片中文字进行 OCR 识别。
+- 如果中文字体加载失败，可以使用 `--font-path` 指定本机中文字体，例如 `C:/Windows/Fonts/msyh.ttc`。
+- 正式数据集生成记录见 [数据生成记录](docs/06_dataset_generation_record.md)。
+- `rotated/` 数据只用于图像校正和 OCR 鲁棒性测试，不混入主 train/val/test。

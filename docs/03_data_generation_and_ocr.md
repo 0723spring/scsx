@@ -19,13 +19,17 @@ dataset/
 │   ├── template_01.png
 │   └── template_02.png
 ├── generated/
-│   ├── waybill_0001.jpg
-│   ├── waybill_0002.jpg
-│   └── ...
+│   ├── clean/
+│   ├── augmented/
+│   └── rotated/
 └── labels/
-    ├── waybill_0001.json
-    ├── waybill_0002.json
-    └── ...
+    ├── labels_clean.json
+    ├── labels_augmented.json
+    ├── labels_rotated.json
+    ├── train.json
+    ├── val.json
+    ├── test.json
+    └── robustness_test.json
 ```
 
 ## 3. 虚拟面单字段
@@ -348,7 +352,17 @@ draw.rectangle([x_min, y_min, x_max, y_max], fill="black")
 
 ## 13. 测试样例
 
-至少准备 5 张虚拟面单：
+当前建议数据集：
+
+| 类型 | 数量 | 用途 |
+| --- | ---: | --- |
+| clean | 210 | 主流程测试、字段提取、脱敏 |
+| augmented | 90 | 亮度、对比度、噪声、模糊、压缩鲁棒性 |
+| rotated | 60 | 轻微旋转校正和 OCR 鲁棒性测试 |
+
+其中 rotated 数据不混入主 train/val/test，单独作为 `robustness_test.json` 使用。
+
+至少准备以下场景：
 
 | 编号 | 场景 | 预期 |
 | --- | --- | --- |
@@ -357,6 +371,12 @@ draw.rectangle([x_min, y_min, x_max, y_max], fill="black")
 | 3 | 不同快递单号前缀 | 单号能识别 |
 | 4 | 图片轻微倾斜 | OCR 可能波动，mock 阶段不要求 |
 | 5 | 缺少手机号 | 接口成功，phone 为 null |
+
+旋转数据说明：
+
+- 角度范围建议控制在 `-5°` 到 `5°`。
+- 旋转后不重新计算 box 时，需要设置 `boxes_valid=false`。
+- 旋转数据主要用于图像预处理和 OCR 鲁棒性展示，不用于精确图片打码评估。
 
 ## 14. 答辩讲法
 

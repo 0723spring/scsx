@@ -1,0 +1,144 @@
+{
+  "template_id": "sf_blank_template",
+  "template_size": [1181, 2126],
+  "template_image": "dataset/templates/sf_blank_template.jpg",
+  "font_candidates": [
+    "C:/Windows/Fonts/msyh.ttc",
+    "C:/Windows/Fonts/simhei.ttf",
+    "C:/Windows/Fonts/simsun.ttc",
+    "C:/Windows/Fonts/msyhbd.ttc"
+  ],
+  "fields": {
+    "tracking_number_top": {
+      "box": [170, 326, 680, 390],
+      "cover_box": [168, 318, 690, 392],
+      "font_size": 34,
+      "align": "center"
+    },
+    "destination_title": {
+      "box": [750, 160, 1110, 205],
+      "font_size": 34
+    },
+    "destination_label": {
+      "box": [750, 215, 1040, 260],
+      "font_size": 26
+    },
+    "destination_code": {
+      "box": [750, 270, 1060, 380],
+      "font_size": 78
+    },
+    "receiver_label_main": {
+      "box": [28, 550, 155, 615],
+      "font_size": 44
+    },
+    "receiver_address_main": {
+      "box": [160, 465, 1075, 545],
+      "font_size": 34,
+      "max_lines": 2
+    },
+    "receiver_identity_main": {
+      "box": [160, 555, 780, 620],
+      "font_size": 34,
+      "max_lines": 1
+    },
+    "payment_left": {
+      "box": [45, 850, 390, 910],
+      "font_size": 30
+    },
+    "payment_middle": {
+      "box": [430, 850, 770, 970],
+      "font_size": 32,
+      "max_lines": 3
+    },
+    "fee_middle": {
+      "box": [430, 1015, 770, 1140],
+      "font_size": 32,
+      "max_lines": 3
+    },
+    "staff_right": {
+      "box": [920, 855, 1110, 1140],
+      "font_size": 25,
+      "max_lines": 6
+    },
+    "sender_label_main": {
+      "box": [28, 1025, 155, 1095],
+      "font_size": 44
+    },
+    "sender_address_main": {
+      "box": [160, 960, 410, 1045],
+      "font_size": 25,
+      "max_lines": 3
+    },
+    "sender_identity_main": {
+      "box": [160, 1060, 420, 1140],
+      "font_size": 25,
+      "max_lines": 3
+    },
+    "ship_time_main": {
+      "box": [785, 915, 918, 1105],
+      "font_size": 20,
+      "max_lines": 5
+    },
+    "origin_code": {
+      "box": [385, 1295, 560, 1340],
+      "font_size": 26
+    },
+    "secondary_sender_label": {
+      "box": [25, 1660, 105, 1765],
+      "font_size": 36,
+      "max_lines": 2
+    },
+    "sender_address_secondary": {
+      "box": [120, 1510, 540, 1600],
+      "font_size": 25,
+      "max_lines": 3
+    },
+    "sender_identity_secondary": {
+      "box": [120, 1615, 530, 1695],
+      "font_size": 25,
+      "max_lines": 3
+    },
+    "secondary_receiver_label": {
+      "box": [595, 1660, 675, 1765],
+      "font_size": 36,
+      "max_lines": 2
+    },
+    "receiver_address_secondary": {
+      "box": [690, 1445, 1120, 1535],
+      "font_size": 25,
+      "max_lines": 3
+    },
+    "receiver_identity_secondary": {
+      "box": [690, 1550, 1110, 1630],
+      "font_size": 25,
+      "max_lines": 3
+    },
+    "quantity": {
+      "box": [35, 1810, 95, 1865],
+      "font_size": 30,
+      "align": "center"
+    },
+    "item_name": {
+      "box": [130, 1810, 735, 1865],
+      "font_size": 32
+    },
+    "remark": {
+      "box": [785, 1810, 1120, 1865],
+      "font_size": 30
+    },
+    "order_label": {
+      "box": [35, 1925, 210, 1975],
+      "font_size": 31
+    },
+    "order_number": {
+      "box": [350, 1935, 560, 1995],
+      "font_size": 35,
+      "align": "center"
+    },
+    "total_fee": {
+      "box": [780, 1895, 1120, 1995],
+      "font_size": 36,
+      "max_lines": 2
+    }
+  }
+}

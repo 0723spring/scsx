@@ -1,0 +1,112 @@
+<!--
+前端主页面文件。
+
+文件职责：
+1. 页面标题：基于 OCR 的快递面单信息识别与隐私保护系统。
+2. 图片上传区域。
+3. 原图预览区域。
+4. 开始识别按钮。
+5. 识别状态提示区域。
+6. 结构化字段展示区域：
+   - 收件人
+   - 手机号
+   - 地址
+   - 快递单号
+7. OCR 完整文本展示区域。
+8. 脱敏图片展示区域。
+9. 引入 style.css 和 app.js。
+10. 页面保持单页结构，不引入复杂前端框架。
+-->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>快递面单信息识别与隐私保护系统</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <div>
+        <h1>快递面单信息识别与隐私保护系统</h1>
+        <p>图片上传、OCR 识别、字段提取与隐私脱敏展示</p>
+      </div>
+      <span id="serviceStatus" class="status-pill">检查服务中</span>
+    </header>
+
+    <section class="workspace">
+      <section class="panel upload-panel">
+        <div class="panel-header">
+          <h2>面单上传</h2>
+          <button id="recognizeBtn" class="primary-btn" disabled>开始识别</button>
+        </div>
+
+        <label class="upload-box" for="fileInput">
+          <input id="fileInput" type="file" accept="image/*">
+          <span>选择快递面单图片</span>
+        </label>
+
+        <div class="preview-frame">
+          <img id="sourcePreview" alt="原图预览">
+          <p id="emptyPreview">尚未选择图片</p>
+        </div>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="panel-header">
+          <h2>识别结果</h2>
+          <span id="recognitionStatus" class="muted">等待上传</span>
+        </div>
+
+        <dl class="field-grid">
+          <div>
+            <dt>收件人</dt>
+            <dd id="receiverName">-</dd>
+          </div>
+          <div>
+            <dt>手机号</dt>
+            <dd id="receiverPhone">-</dd>
+          </div>
+          <div>
+            <dt>快递单号</dt>
+            <dd id="trackingNumber">-</dd>
+          </div>
+          <div>
+            <dt>耗时</dt>
+            <dd id="processingTime">-</dd>
+          </div>
+        </dl>
+
+        <div class="address-block">
+          <span>地址</span>
+          <p id="receiverAddress">-</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="workspace lower-workspace">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>OCR 文本</h2>
+        </div>
+        <ul id="ocrList" class="ocr-list">
+          <li>暂无 OCR 文本</li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>脱敏图片</h2>
+        </div>
+        <div class="preview-frame masked-frame">
+          <img id="maskedPreview" alt="脱敏图片预览">
+          <p id="emptyMasked">识别后显示脱敏图片</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
