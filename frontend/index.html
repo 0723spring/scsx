@@ -47,6 +47,11 @@
           <span>选择快递面单图片</span>
         </label>
 
+        <label class="option-toggle" for="enablePreprocess">
+          <input id="enablePreprocess" type="checkbox">
+          <span>图像校正</span>
+        </label>
+
         <div class="preview-frame">
           <img id="sourcePreview" alt="原图预览">
           <p id="emptyPreview">尚未选择图片</p>
@@ -82,6 +87,25 @@
           <span>地址</span>
           <p id="receiverAddress">-</p>
         </div>
+
+        <section id="preprocessPanel" class="preprocess-panel is-hidden" aria-live="polite">
+          <div>
+            <span>校正状态</span>
+            <strong id="preprocessStatus">-</strong>
+          </div>
+          <div>
+            <span>旋转角度</span>
+            <strong id="preprocessAngle">-</strong>
+          </div>
+          <p id="preprocessMessage">-</p>
+        </section>
+
+        <div class="action-bar">
+          <button id="copyResultBtn" class="secondary-btn" type="button" disabled>复制结果</button>
+          <button id="downloadMaskedBtn" class="secondary-btn" type="button" disabled>下载脱敏图</button>
+          <button id="exportJsonBtn" class="secondary-btn" type="button" disabled>导出 JSON</button>
+          <button id="clearBtn" class="ghost-btn" type="button" disabled>清空</button>
+        </div>
       </section>
     </section>
 
@@ -102,6 +126,16 @@
         <div class="preview-frame masked-frame">
           <img id="maskedPreview" alt="脱敏图片预览">
           <p id="emptyMasked">识别后显示脱敏图片</p>
+        </div>
+      </section>
+
+      <section id="preprocessedPanel" class="panel preprocessed-panel is-hidden">
+        <div class="panel-header">
+          <h2>校正图片</h2>
+        </div>
+        <div class="preview-frame compact-frame">
+          <img id="preprocessedPreview" alt="校正图片预览">
+          <p id="emptyPreprocessed">启用后显示校正图片</p>
         </div>
       </section>
     </section>
