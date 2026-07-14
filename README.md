@@ -15,7 +15,7 @@
 
 - 后端：FastAPI
 - 前端：原生 HTML + CSS + JavaScript
-- OCR：前期 mock OCR，后期接入 PaddleOCR
+- OCR：默认使用随仓库提交的 PaddleOCR PP-OCRv6 本地模型，可切换 mock 兜底
 - 图片处理：Pillow，必要时补充 OpenCV
 - 数据存储：本地文件 + JSON，不引入数据库
 - 运行方式：本地前后端分离
@@ -53,6 +53,10 @@ express_waybill_ocr/
 │   ├── templates/
 │   ├── generated/
 │   └── labels/
+├── models/
+│   └── paddleocr/
+│       ├── PP-OCRv6_medium_det/
+│       └── PP-OCRv6_medium_rec/
 ├── docs/
 ├── scripts/
 │   └── generate_waybills.py
@@ -61,6 +65,56 @@ express_waybill_ocr/
 ```
 
 ## 当前版本优先级
+
+当前 main 分支默认走真实 PaddleOCR：
+
+```text
+OCR_MODE=paddle
+```
+
+本地模型目录：
+
+```text
+models/paddleocr/PP-OCRv6_medium_det/
+models/paddleocr/PP-OCRv6_medium_rec/
+```
+
+队友 clone 仓库后，安装 OCR 依赖并启动后端即可使用随仓库提交的模型。若需要临时回到 mock 演示模式，可在启动前设置：
+
+```powershell
+$env:OCR_MODE="mock"
+```
+
+## 克隆后运行
+
+推荐使用 Python 3.10 或 3.11。CPU 版 PaddleOCR 运行命令如下：
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python -m pip install --upgrade pip
+.venv\Scripts\python -m pip install -r requirements.txt
+.venv\Scripts\python -m pip install paddlepaddle==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
+.venv\Scripts\python -m pip install -r requirements-ocr.txt
+```
+
+启动后端，默认走仓库内 PaddleOCR 模型：
+
+```powershell
+.venv\Scripts\python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
+```
+
+启动前端：
+
+```powershell
+cd frontend
+..\.venv\Scripts\python -m http.server 5500
+```
+
+浏览器打开：
+
+```text
+http://127.0.0.1:5500
+```
 
 第一优先级是 MVP 闭环：
 

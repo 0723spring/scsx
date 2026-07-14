@@ -5,9 +5,10 @@
 2. 配置 uploads 和 outputs 目录。
 3. 配置允许上传的图片格式。
 4. 配置最大上传文件大小。
-5. 配置 OCR_MODE，可选 mock 或 paddle。
+5. 配置 OCR_MODE，可选 mock、paddle 或 auto。
 6. 配置 CORS 允许的前端地址。
-7. 后续如有需要，可从环境变量读取配置。
+7. 配置随仓库提交的 PaddleOCR 本地模型目录。
+8. 后续如有需要，可从环境变量读取配置。
 """
 
 import os
@@ -20,9 +21,12 @@ UPLOAD_DIR = BACKEND_DIR / "uploads"
 OUTPUT_DIR = BACKEND_DIR / "outputs"
 DATASET_DIR = BASE_DIR / "dataset"
 LABEL_DIR = DATASET_DIR / "labels"
+MODEL_DIR = BASE_DIR / "models" / "paddleocr"
+PADDLE_DET_MODEL_DIR = Path(os.getenv("PADDLE_DET_MODEL_DIR", MODEL_DIR / "PP-OCRv6_medium_det"))
+PADDLE_REC_MODEL_DIR = Path(os.getenv("PADDLE_REC_MODEL_DIR", MODEL_DIR / "PP-OCRv6_medium_rec"))
 
 SERVICE_NAME = "express-waybill-ocr"
-OCR_MODE = os.getenv("OCR_MODE", "mock").strip().lower()
+OCR_MODE = os.getenv("OCR_MODE", "paddle").strip().lower()
 MAX_UPLOAD_SIZE = 10 * 1024 * 1024
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 

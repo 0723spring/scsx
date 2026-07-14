@@ -1,4 +1,7 @@
+import os
 from io import BytesIO
+
+os.environ["OCR_MODE"] = "mock"
 
 from fastapi.testclient import TestClient
 from PIL import Image

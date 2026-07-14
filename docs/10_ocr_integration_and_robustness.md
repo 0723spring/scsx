@@ -68,21 +68,21 @@ PaddleOCR 3.7.0
 cuda False
 ```
 
-## 3. OCR 模型选择与下载
+## 3. OCR 模型选择与提交
 
 本项目只需要通用 OCR 能力，用于识别快递面单上的中文、英文和数字。因此采用 PaddleOCR 3.7 默认的 PP-OCRv6 通用 OCR pipeline。
 
-首次运行 PaddleOCR 时，模型会自动下载到本机缓存目录：
+模型最初由 PaddleOCR 自动下载到本机缓存目录：
 
 ```text
 C:/Users/34566/.paddlex/official_models/
 ```
 
-本次已下载并缓存：
+为保证队友 clone 仓库后也能直接使用同一套 OCR 模型，本次已将必要推理文件复制并提交到项目目录：
 
 ```text
-PP-OCRv6_medium_det
-PP-OCRv6_medium_rec
+models/paddleocr/PP-OCRv6_medium_det/
+models/paddleocr/PP-OCRv6_medium_rec/
 ```
 
 含义：
@@ -90,7 +90,7 @@ PP-OCRv6_medium_rec
 - `PP-OCRv6_medium_det`：文本检测模型，用来找出图片中文字区域。
 - `PP-OCRv6_medium_rec`：文本识别模型，用来识别每个文字区域中的具体内容。
 
-模型下载完成后，后续运行会直接使用本地缓存，不需要重复下载。
+后端初始化 PaddleOCR 时会优先读取上述仓库内模型目录，不再依赖用户本机缓存目录。若需要临时改用其他模型目录，可通过环境变量 `PADDLE_DET_MODEL_DIR` 和 `PADDLE_REC_MODEL_DIR` 指定。
 
 ## 4. 后端接入方式
 
@@ -120,13 +120,13 @@ OCR_MODE=auto
 | `paddle` | 强制使用 PaddleOCR 真实识别 |
 | `auto` | 优先使用 PaddleOCR，失败后回退 mock |
 
-如果不设置环境变量，默认仍是：
+如果不设置环境变量，main 分支默认是：
 
 ```text
-OCR_MODE=mock
+OCR_MODE=paddle
 ```
 
-这样可以保证原有 base 演示流程不会被破坏。
+这样队友 clone 仓库后，安装 OCR 依赖并启动后端，就会默认走随仓库提交的真实 PaddleOCR 模型，而不是 mock OCR。
 
 ### 4.2 PaddleOCR 输出转换
 
@@ -162,7 +162,6 @@ rec_polys
 
 保留原因：
 
-- PaddleOCR 首次运行需要下载模型。
 - CPU 推理速度较慢。
 - 答辩现场环境可能不稳定。
 - mock OCR 可以保证项目完整链路随时可演示。
@@ -228,20 +227,20 @@ mock OCR 中的文本通常是：
 
 ## 6. 运行方式
 
-### 6.1 使用 mock OCR
+### 6.1 使用默认真实 PaddleOCR
 
-默认就是 mock 模式，不需要额外设置：
+main 分支默认使用随仓库提交的 PaddleOCR 本地模型，不需要额外设置 `OCR_MODE`：
 
 ```powershell
 .venv\Scripts\python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-### 6.2 使用真实 PaddleOCR
+### 6.2 临时使用 mock OCR
 
-PowerShell 中设置：
+如果需要快速演示或绕过真实 OCR，可在 PowerShell 中设置：
 
 ```powershell
-$env:OCR_MODE="paddle"
+$env:OCR_MODE="mock"
 .venv\Scripts\python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
@@ -391,10 +390,10 @@ augmented 样本中有 2 张手机号识别错误，例如：
 
 当前 OCR 模式通过后端环境变量控制，前端页面还没有提供切换入口。
 
-如果需要演示真实 OCR，需要先在后端启动前设置：
+main 分支默认已经使用真实 PaddleOCR。如果需要临时改回 mock OCR，需要先在后端启动前设置：
 
 ```powershell
-$env:OCR_MODE="paddle"
+$env:OCR_MODE="mock"
 ```
 
 ## 12. 答辩可用表述
@@ -402,7 +401,7 @@ $env:OCR_MODE="paddle"
 可以这样介绍本方向：
 
 ```text
-我们在 base 版本 mock OCR 的基础上接入了 PaddleOCR 真实识别能力。系统现在支持 mock、paddle 和 auto 三种 OCR 模式。真实 OCR 使用 PP-OCRv6 通用模型，可以识别中文、英文和数字，并返回文本框坐标。我们将 PaddleOCR 结果统一转换成项目内部格式，使字段提取和图片脱敏模块无需改动即可继续使用。
+我们在 base 版本 mock OCR 的基础上接入了 PaddleOCR 真实识别能力，并将 PP-OCRv6 检测和识别模型随仓库提交。系统现在默认走 paddle 模式，同时支持 mock、paddle 和 auto 三种 OCR 模式。真实 OCR 可以识别中文、英文和数字，并返回文本框坐标。我们将 PaddleOCR 结果统一转换成项目内部格式，使字段提取和图片脱敏模块无需改动即可继续使用。
 ```
 
 可以这样介绍鲁棒性测试：
@@ -414,7 +413,7 @@ $env:OCR_MODE="paddle"
 可以这样说明保留 mock 的原因：
 
 ```text
-由于 PaddleOCR 首次运行需要下载模型，且 CPU 推理速度较慢，因此系统保留了 mock OCR 作为兜底演示方案。这样即使真实 OCR 环境临时不可用，也能保证系统完整流程可以展示。
+由于 CPU 推理速度较慢，且真实 OCR 环境可能受依赖安装影响，因此系统保留了 mock OCR 作为兜底演示方案。这样即使真实 OCR 环境临时不可用，也能保证系统完整流程可以展示。
 ```
 
 ## 13. 本次完成文件清单

@@ -5,7 +5,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-from .config import LABEL_DIR, OCR_MODE
+from .config import LABEL_DIR, OCR_MODE, PADDLE_DET_MODEL_DIR, PADDLE_REC_MODEL_DIR
 
 
 def to_quad(box: list[int]) -> list[list[int]]:
@@ -105,11 +105,19 @@ def get_paddle_ocr() -> Any:
     except ImportError as exc:
         raise RuntimeError("PaddleOCR 未安装，请先安装 requirements-ocr.txt") from exc
 
+    paddle_kwargs = {
+        "lang": "ch",
+        "use_doc_orientation_classify": False,
+        "use_doc_unwarping": False,
+        "use_textline_orientation": False,
+    }
+    if PADDLE_DET_MODEL_DIR.exists():
+        paddle_kwargs["text_detection_model_dir"] = str(PADDLE_DET_MODEL_DIR)
+    if PADDLE_REC_MODEL_DIR.exists():
+        paddle_kwargs["text_recognition_model_dir"] = str(PADDLE_REC_MODEL_DIR)
+
     return PaddleOCR(
-        lang="ch",
-        use_doc_orientation_classify=False,
-        use_doc_unwarping=False,
-        use_textline_orientation=False,
+        **paddle_kwargs,
     )
 
 

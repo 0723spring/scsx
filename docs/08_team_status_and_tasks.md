@@ -22,7 +22,7 @@
   - `GET /api/health`
   - `POST /api/recognize`
   - 上传图片保存
-  - mock OCR
+  - PaddleOCR 真实识别，mock OCR 可作为兜底
   - 字段提取
   - 脱敏图片生成
 - 已实现基础前端：
@@ -33,7 +33,7 @@
   - 展示 OCR 文本
   - 展示脱敏图片
 
-当前 base 版本的 OCR 是 mock OCR。也就是说，如果上传我们生成的数据集图片，后端会根据图片文件名匹配标签 JSON，模拟 OCR 返回文本和坐标。后续接入 PaddleOCR 时，主要替换 `backend/ocr_service.py` 里的 `run_ocr()`。
+当前 main 分支默认使用随仓库提交的 PaddleOCR PP-OCRv6 本地模型进行真实 OCR。mock OCR 仍然保留，可通过 `OCR_MODE=mock` 临时切换，用于兜底演示。
 
 ## 2. 运行方式约定
 
@@ -150,9 +150,9 @@ OCR 识别信息
 
 - 已创建项目专用 Python 3.11 虚拟环境 `.venv`。
 - 已安装 PaddlePaddle CPU 版和 PaddleOCR。
-- 已下载并缓存 PP-OCRv6 通用 OCR 模型，缓存目录为 `C:/Users/34566/.paddlex/official_models/`。
+- 已将 PP-OCRv6 通用 OCR 模型提交到仓库目录 `models/paddleocr/`。
 - 已在 `backend/ocr_service.py` 接入真实 PaddleOCR。
-- 已保留 mock OCR 兜底，可通过 `OCR_MODE=mock/paddle/auto` 切换。
+- 默认使用 `OCR_MODE=paddle`，并保留 mock OCR 兜底，可通过 `OCR_MODE=mock/paddle/auto` 切换。
 - 已完成 clean、augmented、rotated 样本的鲁棒性测试记录。
 - 详细测试报告见 `docs/10_ocr_integration_and_robustness.md`。
 
