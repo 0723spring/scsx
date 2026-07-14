@@ -29,6 +29,7 @@
 - [环境配置与依赖说明](docs/05_environment.md)
 - [Base 版本运行说明](docs/07_base_app_usage.md)
 - [当前进度与团队任务分工草案](docs/08_team_status_and_tasks.md)
+- [OCR 接入与鲁棒性测试记录](docs/10_ocr_integration_and_robustness.md)
 
 ## 推荐项目结构
 

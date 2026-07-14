@@ -146,6 +146,16 @@ OCR 识别信息
 
 ### 同学 1：OCR 接入与鲁棒性测试方向
 
+当前完成情况：
+
+- 已创建项目专用 Python 3.11 虚拟环境 `.venv`。
+- 已安装 PaddlePaddle CPU 版和 PaddleOCR。
+- 已下载并缓存 PP-OCRv6 通用 OCR 模型，缓存目录为 `C:/Users/34566/.paddlex/official_models/`。
+- 已在 `backend/ocr_service.py` 接入真实 PaddleOCR。
+- 已保留 mock OCR 兜底，可通过 `OCR_MODE=mock/paddle/auto` 切换。
+- 已完成 clean、augmented、rotated 样本的鲁棒性测试记录。
+- 详细测试报告见 `docs/10_ocr_integration_and_robustness.md`。
+
 任务：
 
 - 安装和测试 PaddleOCR。

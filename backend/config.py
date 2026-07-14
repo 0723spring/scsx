@@ -10,6 +10,7 @@
 7. 后续如有需要，可从环境变量读取配置。
 """
 
+import os
 from pathlib import Path
 
 
@@ -21,7 +22,7 @@ DATASET_DIR = BASE_DIR / "dataset"
 LABEL_DIR = DATASET_DIR / "labels"
 
 SERVICE_NAME = "express-waybill-ocr"
-OCR_MODE = "mock"
+OCR_MODE = os.getenv("OCR_MODE", "mock").strip().lower()
 MAX_UPLOAD_SIZE = 10 * 1024 * 1024
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 

@@ -1,26 +1,30 @@
-"""OCR 识别服务文件。
-
-文件职责：
-1. 提供 run_ocr(image_path) 统一入口。
-2. 第一阶段实现 mock OCR，返回 OCR 文本和 box。
-3. 第二阶段预留 PaddleOCR 接入位置。
-4. 将 OCR 原始结果转换为统一格式：
-   [{"text": "...", "confidence": 0.98, "box": [[x1,y1], ...]}]
-5. 支持后续通过配置切换 mock 模式和 paddle 模式。
-6. OCR 异常时抛出明确错误，交给 main.py 统一返回。
-"""
+"""OCR service with mock fallback and optional PaddleOCR integration."""
 
 import json
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-from .config import LABEL_DIR
+from .config import LABEL_DIR, OCR_MODE
 
 
 def to_quad(box: list[int]) -> list[list[int]]:
     x1, y1, x2, y2 = box
     return [[x1, y1], [x2, y1], [x2, y2], [x1, y2]]
+
+
+def normalize_point(point: Any) -> list[int]:
+    return [int(round(float(point[0]))), int(round(float(point[1])))]
+
+
+def normalize_poly(poly: Any) -> list[list[int]] | None:
+    if poly is None:
+        return None
+    if hasattr(poly, "tolist"):
+        poly = poly.tolist()
+    if len(poly) < 4:
+        return None
+    return [normalize_point(point) for point in poly[:4]]
 
 
 def union_boxes(*boxes: list[int] | None) -> list[int] | None:
@@ -94,7 +98,61 @@ def default_mock_ocr() -> list[dict[str, Any]]:
     ]
 
 
-def run_ocr(image_path: str | Path, original_filename: str | None = None) -> list[dict[str, Any]]:
+@lru_cache(maxsize=1)
+def get_paddle_ocr() -> Any:
+    try:
+        from paddleocr import PaddleOCR
+    except ImportError as exc:
+        raise RuntimeError("PaddleOCR 未安装，请先安装 requirements-ocr.txt") from exc
+
+    return PaddleOCR(
+        lang="ch",
+        use_doc_orientation_classify=False,
+        use_doc_unwarping=False,
+        use_textline_orientation=False,
+    )
+
+
+def _get_sequence(result: dict[str, Any], key: str) -> list[Any]:
+    value = result.get(key, [])
+    if value is None:
+        return []
+    if hasattr(value, "tolist"):
+        value = value.tolist()
+    return list(value)
+
+
+def paddle_to_ocr_items(paddle_results: list[Any]) -> list[dict[str, Any]]:
+    normalized: list[dict[str, Any]] = []
+    for page in paddle_results:
+        page_result = dict(page)
+        texts = _get_sequence(page_result, "rec_texts")
+        scores = _get_sequence(page_result, "rec_scores")
+        polys = _get_sequence(page_result, "rec_polys")
+        if not polys:
+            polys = _get_sequence(page_result, "dt_polys")
+
+        for index, text in enumerate(texts):
+            text = str(text).strip()
+            if not text:
+                continue
+            confidence = float(scores[index]) if index < len(scores) else 0.0
+            box = normalize_poly(polys[index]) if index < len(polys) else None
+            normalized.append({
+                "text": text,
+                "confidence": confidence,
+                "box": box,
+            })
+    return normalized
+
+
+def run_paddle_ocr(image_path: str | Path) -> list[dict[str, Any]]:
+    ocr = get_paddle_ocr()
+    results = ocr.predict(str(image_path))
+    return paddle_to_ocr_items(results)
+
+
+def run_mock_ocr(image_path: str | Path, original_filename: str | None = None) -> list[dict[str, Any]]:
     match_names = []
     if original_filename:
         match_names.append(Path(original_filename).name)
@@ -107,3 +165,18 @@ def run_ocr(image_path: str | Path, original_filename: str | None = None) -> lis
             return label_to_ocr(label)
 
     return default_mock_ocr()
+
+
+def run_ocr(image_path: str | Path, original_filename: str | None = None) -> list[dict[str, Any]]:
+    if OCR_MODE == "paddle":
+        return run_paddle_ocr(image_path)
+
+    if OCR_MODE == "auto":
+        try:
+            paddle_results = run_paddle_ocr(image_path)
+            if paddle_results:
+                return paddle_results
+        except Exception:
+            pass
+
+    return run_mock_ocr(image_path, original_filename=original_filename)
