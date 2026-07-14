@@ -29,6 +29,14 @@
     return `${API_BASE}${path.startsWith("/") ? path : `/${path}`}`;
   }
 
+  function resolveViewFromHash(hash) {
+    const view = String(hash || "").replace(/^#/, "").toLowerCase();
+    if (view === "ocr" || view === "masked") {
+      return view;
+    }
+    return "main";
+  }
+
   function describePreprocess(preprocess) {
     if (!preprocess) {
       return {
@@ -161,6 +169,7 @@
   const exported = {
     API_BASE,
     buildApiUrl,
+    resolveViewFromHash,
     describePreprocess,
     buildResultExport,
     buildCopyText,
@@ -177,12 +186,19 @@
   const fileInput = document.querySelector("#fileInput");
   const enablePreprocess = document.querySelector("#enablePreprocess");
   const recognizeBtn = document.querySelector("#recognizeBtn");
+  const viewOcrBtn = document.querySelector("#viewOcrBtn");
+  const viewMaskedBtn = document.querySelector("#viewMaskedBtn");
   const copyResultBtn = document.querySelector("#copyResultBtn");
   const downloadMaskedBtn = document.querySelector("#downloadMaskedBtn");
   const exportJsonBtn = document.querySelector("#exportJsonBtn");
   const clearBtn = document.querySelector("#clearBtn");
+  const backFromOcrBtn = document.querySelector("#backFromOcrBtn");
+  const backFromMaskedBtn = document.querySelector("#backFromMaskedBtn");
   const serviceStatus = document.querySelector("#serviceStatus");
   const recognitionStatus = document.querySelector("#recognitionStatus");
+  const mainView = document.querySelector("#mainView");
+  const ocrView = document.querySelector("#ocrView");
+  const maskedView = document.querySelector("#maskedView");
   const sourcePreview = document.querySelector("#sourcePreview");
   const maskedPreview = document.querySelector("#maskedPreview");
   const preprocessedPreview = document.querySelector("#preprocessedPreview");
@@ -221,10 +237,29 @@
 
   function setActionButtonsEnabled() {
     const hasResult = Boolean(latestResult);
+    viewOcrBtn.disabled = !hasResult;
+    viewMaskedBtn.disabled = !latestResult?.masked_image_url;
     copyResultBtn.disabled = !hasResult;
     exportJsonBtn.disabled = !hasResult;
     downloadMaskedBtn.disabled = !latestResult?.masked_image_url;
     clearBtn.disabled = !selectedFile && !hasResult;
+  }
+
+  function setActiveView(viewName) {
+    const view = resolveViewFromHash(viewName);
+    mainView.classList.toggle("is-hidden", view !== "main");
+    ocrView.classList.toggle("is-hidden", view !== "ocr");
+    maskedView.classList.toggle("is-hidden", view !== "masked");
+  }
+
+  function navigateToView(viewName) {
+    const view = resolveViewFromHash(viewName);
+    const targetHash = view === "main" ? "#main" : `#${view}`;
+    if (global.location.hash !== targetHash) {
+      global.location.hash = targetHash;
+      return;
+    }
+    setActiveView(targetHash);
   }
 
   function resetPreprocessResult() {
@@ -429,7 +464,29 @@
     sourceFrame.classList.remove("has-image");
     resetResult();
     setStatus(recognitionStatus, "等待上传");
+    navigateToView("main");
   });
 
+  viewOcrBtn.addEventListener("click", () => {
+    navigateToView("ocr");
+  });
+
+  viewMaskedBtn.addEventListener("click", () => {
+    navigateToView("masked");
+  });
+
+  backFromOcrBtn.addEventListener("click", () => {
+    navigateToView("main");
+  });
+
+  backFromMaskedBtn.addEventListener("click", () => {
+    navigateToView("main");
+  });
+
+  global.addEventListener("hashchange", () => {
+    setActiveView(global.location.hash);
+  });
+
+  setActiveView(global.location.hash);
   checkHealth();
 })(typeof window !== "undefined" ? window : globalThis);

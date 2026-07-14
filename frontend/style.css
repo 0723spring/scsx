@@ -91,8 +91,26 @@ body {
   gap: 18px;
 }
 
-.lower-workspace {
-  margin-top: 18px;
+.app-view {
+  min-width: 0;
+}
+
+.detail-view {
+  display: grid;
+  gap: 14px;
+}
+
+.detail-toolbar {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.detail-panel {
+  width: 100%;
+}
+
+.detail-header {
+  align-items: flex-start;
 }
 
 .panel {
@@ -135,6 +153,41 @@ body {
 .primary-btn:disabled {
   cursor: not-allowed;
   background: #b6c3d6;
+}
+
+.motion-btn {
+  transform: scale(1);
+  transform-origin: center;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.motion-btn:hover:not(:disabled) {
+  animation: button-pop 220ms ease-out;
+  transform: scale(1.04);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.16);
+}
+
+.motion-btn:active:not(:disabled) {
+  transform: scale(0.98);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
+}
+
+@keyframes button-pop {
+  0% {
+    transform: scale(1);
+  }
+
+  58% {
+    transform: scale(1.07);
+  }
+
+  100% {
+    transform: scale(1.04);
+  }
 }
 
 .secondary-btn,
@@ -336,7 +389,7 @@ dd,
 
 .action-bar {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
   margin-top: 14px;
 }
@@ -373,5 +426,15 @@ dd,
   .action-bar,
   .preprocess-panel {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-btn,
+  .motion-btn:hover:not(:disabled),
+  .motion-btn:active:not(:disabled) {
+    animation: none;
+    transform: none;
+    transition: none;
   }
 }

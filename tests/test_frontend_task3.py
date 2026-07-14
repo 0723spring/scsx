@@ -23,6 +23,13 @@ def test_frontend_has_task3_controls() -> None:
 
     required_ids = [
         "enablePreprocess",
+        "mainView",
+        "ocrView",
+        "maskedView",
+        "viewOcrBtn",
+        "viewMaskedBtn",
+        "backFromOcrBtn",
+        "backFromMaskedBtn",
         "copyResultBtn",
         "downloadMaskedBtn",
         "exportJsonBtn",
@@ -79,7 +86,36 @@ process.stdout.write(JSON.stringify({
     assert data["exportPayload"]["preprocess"]["applied"] is True
 
 
+def test_frontend_resolves_hash_views() -> None:
+    script = r"""
+const helpers = require("./frontend/app.js");
+process.stdout.write(JSON.stringify({
+  main: helpers.resolveViewFromHash(""),
+  ocr: helpers.resolveViewFromHash("#ocr"),
+  masked: helpers.resolveViewFromHash("#masked"),
+  unknown: helpers.resolveViewFromHash("#else")
+}));
+"""
+
+    data = run_node_json(script)
+
+    assert data == {
+        "main": "main",
+        "ocr": "ocr",
+        "masked": "masked",
+        "unknown": "main",
+    }
+
+
 def test_frontend_appends_preprocess_form_field() -> None:
     app_js = (PROJECT_ROOT / "frontend" / "app.js").read_text(encoding="utf-8")
 
     assert 'formData.append("enable_preprocess"' in app_js
+
+
+def test_frontend_has_button_motion_styles() -> None:
+    css = (PROJECT_ROOT / "frontend" / "style.css").read_text(encoding="utf-8")
+
+    assert "@keyframes button-pop" in css
+    assert ".motion-btn:hover:not(:disabled)" in css
+    assert "@media (prefers-reduced-motion: reduce)" in css
