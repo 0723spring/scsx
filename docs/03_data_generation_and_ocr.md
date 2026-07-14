@@ -22,10 +22,12 @@ dataset/
 │   ├── clean/
 │   ├── augmented/
 │   └── rotated/
+├── test/
 └── labels/
     ├── labels_clean.json
     ├── labels_augmented.json
     ├── labels_rotated.json
+    ├── extra_test.json
     ├── train.json
     ├── val.json
     ├── test.json
@@ -359,8 +361,11 @@ draw.rectangle([x_min, y_min, x_max, y_max], fill="black")
 | clean | 210 | 主流程测试、字段提取、脱敏 |
 | augmented | 90 | 亮度、对比度、噪声、模糊、压缩鲁棒性 |
 | rotated | 60 | 轻微旋转校正和 OCR 鲁棒性测试 |
+| extra test | 10 | 独立泛化测试，不加入 mock OCR 标签索引 |
 
 其中 rotated 数据不混入主 train/val/test，单独作为 `robustness_test.json` 使用。
+
+其中 extra test 数据放在 `dataset/test/`，标签为 `extra_test.json`，用于检查系统是否真的基于 OCR/模型识别新图片。
 
 至少准备以下场景：
 

@@ -1,0 +1,822 @@
+[
+  {
+    "image": "test/waybill_extra_test_0001.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "902643845228762",
+      "destination_code": "010",
+      "receiver_name": "朱超",
+      "receiver_phone": "13059869958",
+      "receiver_address": "福建省泉州市丰泽区东海大街119号海景花园16栋2290室",
+      "sender_name": "韩桂芳",
+      "sender_phone": "13278488010",
+      "sender_address": "江苏省南京市鼓楼区中山北路118号梧桐里9栋713室",
+      "item_name": "家居用品",
+      "quantity": 1,
+      "remark": "易碎物品",
+      "order_number": "9601037",
+      "order_time": "2026-07-13 16:05:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        275,
+        336,
+        574,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        1019,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        488,
+        596
+      ],
+      "sender_address": [
+        160,
+        965,
+        398,
+        1045
+      ],
+      "sender_name": [
+        160,
+        1066,
+        250,
+        1090
+      ],
+      "sender_phone": [
+        255,
+        1066,
+        411,
+        1090
+      ]
+    },
+    "metadata": {
+      "generated": true,
+      "augmented": true,
+      "boxes_valid": true,
+      "augmentations": {
+        "brightness_factor": 1.063,
+        "contrast_factor": 0.915,
+        "gaussian_noise_sigma": 3.61,
+        "gaussian_blur_radius": 0.56,
+        "jpeg_quality": 80,
+        "rotation": 0,
+        "perspective": false
+      },
+      "independent_test": true,
+      "excluded_from_train_val_test": true,
+      "excluded_from_mock_ocr_index": true,
+      "usage": "manual_generalization_test",
+      "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。"
+    }
+  },
+  {
+    "image": "test/waybill_extra_test_0002.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "2562379263489",
+      "destination_code": "712",
+      "receiver_name": "魏佳琪",
+      "receiver_phone": "13637186522",
+      "receiver_address": "北京市北京市朝阳区望京东路79号测试大厦18栋2363室",
+      "sender_name": "何宇航",
+      "sender_phone": "13592996137",
+      "sender_address": "山东省青岛市市南区香港中路181号海岸名苑2栋2093室",
+      "item_name": "手机配件",
+      "quantity": 1,
+      "remark": "轻拿轻放",
+      "order_number": "1767662076",
+      "order_time": "2026-07-13 13:53:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        295,
+        336,
+        554,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        1000,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        596
+      ],
+      "sender_address": [
+        160,
+        965,
+        398,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1066,
+        250,
+        1091
+      ],
+      "sender_phone": [
+        255,
+        1066,
+        411,
+        1091
+      ]
+    },
+    "metadata": {
+      "generated": true,
+      "augmented": true,
+      "boxes_valid": true,
+      "augmentations": {
+        "brightness_factor": 1.034,
+        "contrast_factor": 1.087,
+        "gaussian_noise_sigma": 3.43,
+        "gaussian_blur_radius": 0.5,
+        "jpeg_quality": 82,
+        "rotation": 0,
+        "perspective": false
+      },
+      "independent_test": true,
+      "excluded_from_train_val_test": true,
+      "excluded_from_mock_ocr_index": true,
+      "usage": "manual_generalization_test",
+      "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。"
+    }
+  },
+  {
+    "image": "test/waybill_extra_test_0003.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "287142079989269",
+      "destination_code": "0595",
+      "receiver_name": "尤春梅",
+      "receiver_phone": "17730970049",
+      "receiver_address": "湖南省株洲市天元区泰山路142号湘水湾9栋2588室",
+      "sender_name": "杨明",
+      "sender_phone": "15000591968",
+      "sender_address": "内蒙古自治区呼和浩特市赛罕区大学东街143号草原明珠14栋181室",
+      "item_name": "洗漱用品",
+      "quantity": 3,
+      "remark": "放门卫处",
+      "order_number": "932340365",
+      "order_time": "2026-07-13 11:05:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        275,
+        336,
+        574,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        932,
+        506
+      ],
+      "receiver_name": [
+        160,
+        561,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        561,
+        522,
+        596
+      ],
+      "sender_address": [
+        160,
+        966,
+        407,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1067,
+        250,
+        1091
+      ],
+      "sender_phone": [
+        255,
+        1067,
+        386,
+        1091
+      ]
+    },
+    "metadata": {
+      "generated": true,
+      "augmented": true,
+      "boxes_valid": true,
+      "augmentations": {
+        "brightness_factor": 1.042,
+        "contrast_factor": 0.934,
+        "gaussian_noise_sigma": 4.62,
+        "gaussian_blur_radius": 0.39,
+        "jpeg_quality": 71,
+        "rotation": 0,
+        "perspective": false
+      },
+      "independent_test": true,
+      "excluded_from_train_val_test": true,
+      "excluded_from_mock_ocr_index": true,
+      "usage": "manual_generalization_test",
+      "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。"
+    }
+  },
+  {
+    "image": "test/waybill_extra_test_0004.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "126726597448",
+      "destination_code": "712",
+      "receiver_name": "陶志鹏",
+      "receiver_phone": "13076522513",
+      "receiver_address": "陕西省西安市长安区学府大道5号书香苑14栋1004室",
+      "sender_name": "施雪梅",
+      "sender_phone": "13226588432",
+      "sender_address": "上海市上海市徐汇区漕溪北路51号文苑小区10栋2555室",
+      "item_name": "玩具",
+      "quantity": 2,
+      "remark": "工作日派送",
+      "order_number": "66563086",
+      "order_time": "2026-07-13 14:16:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        305,
+        336,
+        544,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        946,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        596
+      ],
+      "sender_address": [
+        160,
+        965,
+        398,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1065,
+        250,
+        1090
+      ],
+      "sender_phone": [
+        255,
+        1065,
+        411,
+        1090
+      ]
+    },
+    "metadata": {
+      "generated": true,
+      "augmented": true,
+      "boxes_valid": true,
+      "augmentations": {
+        "brightness_factor": 1.072,
+        "contrast_factor": 0.921,
+        "gaussian_noise_sigma": 5.83,
+        "gaussian_blur_radius": 0.58,
+        "jpeg_quality": 83,
+        "rotation": 0,
+        "perspective": false
+      },
+      "independent_test": true,
+      "excluded_from_train_val_test": true,
+      "excluded_from_mock_ocr_index": true,
+      "usage": "manual_generalization_test",
+      "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。"
+    }
+  },
+  {
+    "image": "test/waybill_extra_test_0005.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "042892982679523",
+      "destination_code": "010",
+      "receiver_name": "钱志鹏",
+      "receiver_phone": "17744854950",
+      "receiver_address": "上海市上海市徐汇区漕溪北路185号文苑小区6栋1948室",
+      "sender_name": "曹家豪",
+      "sender_phone": "13535853672",
+      "sender_address": "安徽省合肥市蜀山区长江西路64号天鹅湖小区4栋577室",
+      "item_name": "电子配件",
+      "quantity": 3,
+      "remark": "轻拿轻放",
+      "order_number": "03099486",
+      "order_time": "2026-07-13 09:29:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        275,
+        336,
+        574,
+        362
+      ],
+      "receiver_address": [
+        160,
+        470,
+        1000,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        596
+      ],
+      "sender_address": [
+        160,
+        964,
+        408,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1066,
+        250,
+        1090
+      ],
+      "sender_phone": [
+        255,
+        1066,
+        411,
+        1090
+      ]
+    },
+    "metadata": {
+      "generated": true,
+      "augmented": true,
+      "boxes_valid": true,
+      "augmentations": {
+        "brightness_factor": 0.998,
+        "contrast_factor": 1.035,
+        "gaussian_noise_sigma": 2.83,
+        "gaussian_blur_radius": 0.0,
+        "jpeg_quality": 73,
+        "rotation": 0,
+        "perspective": false
+      },
+      "independent_test": true,
+      "excluded_from_train_val_test": true,
+      "excluded_from_mock_ocr_index": true,
+      "usage": "manual_generalization_test",
+      "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。"
+    }
+  },
+  {
+    "image": "test/waybill_extra_test_0006.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "66849707775274",
+      "destination_code": "712",
+      "receiver_name": "陈秀兰",
+      "receiver_phone": "16654973753",
+      "receiver_address": "山东省青岛市市南区香港中路160号海岸名苑5栋2181室",
+      "sender_name": "杨红梅",
+      "sender_phone": "18871716179",
+      "sender_address": "云南省昆明市五华区人民中路75号春城花园14栋247室",
+      "item_name": "书籍",
+      "quantity": 2,
+      "remark": "周末可收",
+      "order_number": "567166664",
+      "order_time": "2026-07-13 09:57:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        285,
+        336,
+        564,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        1000,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        596
+      ],
+      "sender_address": [
+        160,
+        965,
+        398,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1065,
+        250,
+        1091
+      ],
+      "sender_phone": [
+        255,
+        1065,
+        411,
+        1091
+      ]
+    },
+    "metadata": {
+      "generated": true,
+      "augmented": true,
+      "boxes_valid": true,
+      "augmentations": {
+        "brightness_factor": 1.1,
+        "contrast_factor": 0.952,
+        "gaussian_noise_sigma": 5.22,
+        "gaussian_blur_radius": 0.0,
+        "jpeg_quality": 73,
+        "rotation": 0,
+        "perspective": false
+      },
+      "independent_test": true,
+      "excluded_from_train_val_test": true,
+      "excluded_from_mock_ocr_index": true,
+      "usage": "manual_generalization_test",
+      "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。"
+    }
+  },
+  {
+    "image": "test/waybill_extra_test_0007.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "27282200984251",
+      "destination_code": "027",
+      "receiver_name": "金思雨",
+      "receiver_phone": "13935497705",
+      "receiver_address": "福建省厦门市思明区湖滨南路7号鹭岛花园4栋634室",
+      "sender_name": "金俊杰",
+      "sender_phone": "15808487083",
+      "sender_address": "福建省福州市鼓楼区五四路110号榕城雅居8栋1142室",
+      "item_name": "鼠标",
+      "quantity": 4,
+      "remark": "注意防水",
+      "order_number": "3025543356",
+      "order_time": "2026-07-13 13:32:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        285,
+        336,
+        564,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        940,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        595
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        595
+      ],
+      "sender_address": [
+        160,
+        965,
+        398,
+        1045
+      ],
+      "sender_name": [
+        160,
+        1066,
+        250,
+        1090
+      ],
+      "sender_phone": [
+        255,
+        1066,
+        411,
+        1090
+      ]
+    },
+    "metadata": {
+      "generated": true,
+      "augmented": true,
+      "boxes_valid": true,
+      "augmentations": {
+        "brightness_factor": 1.106,
+        "contrast_factor": 0.923,
+        "gaussian_noise_sigma": 2.37,
+        "gaussian_blur_radius": 0.0,
+        "jpeg_quality": 68,
+        "rotation": 0,
+        "perspective": false
+      },
+      "independent_test": true,
+      "excluded_from_train_val_test": true,
+      "excluded_from_mock_ocr_index": true,
+      "usage": "manual_generalization_test",
+      "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。"
+    }
+  },
+  {
+    "image": "test/waybill_extra_test_0008.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "218238931849372",
+      "destination_code": "010",
+      "receiver_name": "严梦婷",
+      "receiver_phone": "18820557094",
+      "receiver_address": "广东省广州市天河区体育西路108号珠江新城17栋1381室",
+      "sender_name": "沈佳怡",
+      "sender_phone": "13281785778",
+      "sender_address": "新疆维吾尔自治区乌鲁木齐市天山区解放北路141号雪莲小区3栋2080室",
+      "item_name": "小家电",
+      "quantity": 2,
+      "remark": "派送前联系",
+      "order_number": "850073907",
+      "order_time": "2026-07-13 12:19:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        275,
+        336,
+        574,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        1019,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        596
+      ],
+      "sender_address": [
+        160,
+        965,
+        403,
+        1046
+      ],
+      "sender_name": [
+        160,
+        1067,
+        250,
+        1091
+      ],
+      "sender_phone": [
+        255,
+        1067,
+        411,
+        1091
+      ]
+    },
+    "metadata": {
+      "generated": true,
+      "augmented": true,
+      "boxes_valid": true,
+      "augmentations": {
+        "brightness_factor": 0.993,
+        "contrast_factor": 0.947,
+        "gaussian_noise_sigma": 4.71,
+        "gaussian_blur_radius": 0.0,
+        "jpeg_quality": 67,
+        "rotation": 0,
+        "perspective": false
+      },
+      "independent_test": true,
+      "excluded_from_train_val_test": true,
+      "excluded_from_mock_ocr_index": true,
+      "usage": "manual_generalization_test",
+      "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。"
+    }
+  },
+  {
+    "image": "test/waybill_extra_test_0009.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "6891431834895",
+      "destination_code": "0595",
+      "receiver_name": "赵志鹏",
+      "receiver_phone": "13909027638",
+      "receiver_address": "内蒙古自治区呼和浩特市赛罕区大学东街177号草原明珠9栋134室",
+      "sender_name": "王依娜",
+      "sender_phone": "13983770574",
+      "sender_address": "江苏省苏州市工业园区星湖街18号湖畔小区3栋449室",
+      "item_name": "办公用品",
+      "quantity": 4,
+      "remark": "下午派送",
+      "order_number": "4502274344",
+      "order_time": "2026-07-13 14:34:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        295,
+        336,
+        554,
+        362
+      ],
+      "receiver_address": [
+        160,
+        472,
+        1056,
+        544
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        596
+      ],
+      "sender_address": [
+        160,
+        965,
+        407,
+        1045
+      ],
+      "sender_name": [
+        160,
+        1067,
+        250,
+        1090
+      ],
+      "sender_phone": [
+        255,
+        1067,
+        411,
+        1090
+      ]
+    },
+    "metadata": {
+      "generated": true,
+      "augmented": true,
+      "boxes_valid": true,
+      "augmentations": {
+        "brightness_factor": 0.95,
+        "contrast_factor": 1.055,
+        "gaussian_noise_sigma": 4.1,
+        "gaussian_blur_radius": 0.0,
+        "jpeg_quality": 68,
+        "rotation": 0,
+        "perspective": false
+      },
+      "independent_test": true,
+      "excluded_from_train_val_test": true,
+      "excluded_from_mock_ocr_index": true,
+      "usage": "manual_generalization_test",
+      "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。"
+    }
+  },
+  {
+    "image": "test/waybill_extra_test_0010.png",
+    "template_id": "sf_blank_template",
+    "fields": {
+      "tracking_number": "14221579280759",
+      "destination_code": "0595",
+      "receiver_name": "蒋鹏飞",
+      "receiver_phone": "13111781925",
+      "receiver_address": "甘肃省兰州市城关区庆阳路81号黄河家园17栋1850室",
+      "sender_name": "朱俊峰",
+      "sender_phone": "13823409757",
+      "sender_address": "山西省太原市小店区平阳路36号锦绣苑15栋1274室",
+      "item_name": "书籍",
+      "quantity": 3,
+      "remark": "注意防水",
+      "order_number": "592807416480",
+      "order_time": "2026-07-13 16:46:00"
+    },
+    "main_boxes": {
+      "tracking_number": [
+        285,
+        336,
+        564,
+        362
+      ],
+      "receiver_address": [
+        160,
+        471,
+        966,
+        506
+      ],
+      "receiver_name": [
+        160,
+        563,
+        250,
+        596
+      ],
+      "receiver_phone": [
+        320,
+        563,
+        522,
+        596
+      ],
+      "sender_address": [
+        160,
+        966,
+        410,
+        1051
+      ],
+      "sender_name": [
+        160,
+        1066,
+        250,
+        1090
+      ],
+      "sender_phone": [
+        255,
+        1066,
+        411,
+        1090
+      ]
+    },
+    "metadata": {
+      "generated": true,
+      "augmented": true,
+      "boxes_valid": true,
+      "augmentations": {
+        "brightness_factor": 0.974,
+        "contrast_factor": 0.908,
+        "gaussian_noise_sigma": 3.08,
+        "gaussian_blur_radius": 0.41,
+        "jpeg_quality": 76,
+        "rotation": 0,
+        "perspective": false
+      },
+      "independent_test": true,
+      "excluded_from_train_val_test": true,
+      "excluded_from_mock_ocr_index": true,
+      "usage": "manual_generalization_test",
+      "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。"
+    }
+  }
+]

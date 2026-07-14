@@ -38,6 +38,8 @@ DEFAULT_CONFIG = PROJECT_ROOT / "dataset" / "templates" / "template_config.json"
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "dataset" / "generated"
 DEFAULT_LABELS_PATH = PROJECT_ROOT / "dataset" / "labels" / "labels.json"
 DEFAULT_DATASET_RECORD = PROJECT_ROOT / "docs" / "06_dataset_generation_record.md"
+DEFAULT_EXTRA_TEST_DIR = PROJECT_ROOT / "dataset" / "test"
+DEFAULT_EXTRA_TEST_LABELS = PROJECT_ROOT / "dataset" / "labels" / "extra_test.json"
 
 
 SURNAMES = "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜"
@@ -846,6 +848,44 @@ def generate_rotated_dataset(args: argparse.Namespace) -> None:
     print(f"robustness: {labels_root / 'robustness_test.json'}")
 
 
+def generate_extra_test_dataset(args: argparse.Namespace) -> None:
+    seed = args.seed if args.seed is not None else 20260714
+    random.seed(seed + 31)
+    np.random.seed(seed + 31)
+
+    template_path = resolve_path(args.template, DEFAULT_TEMPLATE)
+    config_path = resolve_path(args.config, DEFAULT_CONFIG)
+    output_dir = resolve_path(args.extra_test_dir, DEFAULT_EXTRA_TEST_DIR)
+    labels_path = resolve_path(args.extra_test_labels, DEFAULT_EXTRA_TEST_LABELS)
+    config = load_json(config_path)
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    labels: list[dict[str, Any]] = []
+
+    for offset in range(args.extra_test_count):
+        index = 10001 + offset
+        data = build_sample(index)
+        image, boxes = draw_waybill(template_path, config, data, args.font_path, preview=False)
+        image, augmentation_metadata = augment_image(image)
+        image_name = f"waybill_extra_test_{offset + 1:04d}.png"
+        image.save(output_dir / image_name)
+
+        metadata = {
+            **augmentation_metadata,
+            "independent_test": True,
+            "excluded_from_train_val_test": True,
+            "excluded_from_mock_ocr_index": True,
+            "usage": "manual_generalization_test",
+            "note": "该数据不混入主数据集，也不加入 mock OCR 标签索引，用于检查真实 OCR/模型泛化效果。",
+        }
+        labels.append(make_label(f"test/{image_name}", data, boxes, metadata))
+
+    save_labels(labels_path, labels)
+    print("extra independent test dataset generated")
+    print(f"images: {output_dir} ({len(labels)})")
+    print(f"labels: {labels_path}")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate synthetic express waybill images.")
     parser.add_argument("--count", type=int, default=20)
@@ -862,6 +902,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--rotated-count", type=int, default=60)
     parser.add_argument("--rotation-min", type=float, default=-5.0)
     parser.add_argument("--rotation-max", type=float, default=5.0)
+    parser.add_argument("--make-extra-test", action="store_true", help="Generate independent non-training test images.")
+    parser.add_argument("--extra-test-count", type=int, default=10)
+    parser.add_argument("--extra-test-dir", default=str(DEFAULT_EXTRA_TEST_DIR))
+    parser.add_argument("--extra-test-labels", default=str(DEFAULT_EXTRA_TEST_LABELS))
     return parser.parse_args()
 
 
@@ -884,6 +928,10 @@ def main() -> None:
 
     if args.make_rotated:
         generate_rotated_dataset(args)
+        return
+
+    if args.make_extra_test:
+        generate_extra_test_dataset(args)
         return
 
     if args.preview:

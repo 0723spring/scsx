@@ -2,7 +2,7 @@
 
 ## 1. 数据集概况
 
-本次生成虚拟顺丰快递面单主数据集共 `300` 张，另生成轻微旋转鲁棒性测试集 `60` 张。
+本次生成虚拟顺丰快递面单主数据集共 `300` 张，另生成轻微旋转鲁棒性测试集 `60` 张，以及独立额外测试集 `10` 张。
 
 主数据集包括：
 
@@ -17,6 +17,15 @@
 - rotated：`60` 张
 - 不混入 train/val/test
 - 用于测试后端图像校正和 OCR 对轻微倾斜图片的适应能力
+
+独立额外测试集：
+
+- extra test：`10` 张
+- 放在 `dataset/test/`
+- 标签为 `dataset/labels/extra_test.json`
+- 不混入 train/val/test
+- 不加入当前 mock OCR 标签索引
+- 用于检查后续系统是否真的依赖 OCR/模型泛化识别，而不是只依赖旧标签匹配
 
 本项目不训练 OCR 模型，训练集主要用于开发和调试字段提取、OCR 接入、隐私脱敏等规则；验证集用于调整参数后检查效果；测试集用于最终统计和答辩展示。
 
@@ -68,12 +77,19 @@ dataset/generated/augmented/
 dataset/generated/rotated/
 ```
 
+独立额外测试图片：
+
+```text
+dataset/test/
+```
+
 标签文件：
 
 ```text
 dataset/labels/labels_clean.json
 dataset/labels/labels_augmented.json
 dataset/labels/labels_rotated.json
+dataset/labels/extra_test.json
 dataset/labels/train.json
 dataset/labels/val.json
 dataset/labels/test.json
@@ -86,6 +102,7 @@ dataset/labels/robustness_test.json
 generated/clean/waybill_clean_0001.png
 generated/augmented/waybill_aug_0001.png
 generated/rotated/waybill_rotated_0001.png
+test/waybill_extra_test_0001.png
 ```
 
 ## 4. 数据划分
@@ -105,8 +122,9 @@ generated/rotated/waybill_rotated_0001.png
 | clean | 210 |
 | augmented | 90 |
 | rotated | 60 |
+| extra test | 10 |
 | main all | 300 |
-| total with rotated | 360 |
+| total with extra sets | 370 |
 
 生成随机种子：
 
@@ -179,3 +197,35 @@ dataset/labels/robustness_test.json
 增强样本的 `metadata.boxes_valid` 为 `true`，因为增强过程未改变文字几何位置。
 
 旋转样本的 `metadata.boxes_valid` 为 `false`，因为旋转会改变文字框位置，而当前项目没有重新计算旋转后的 box。
+
+## 8. 独立额外测试集说明
+
+独立额外测试集输出到：
+
+```text
+dataset/test/
+```
+
+标签输出到：
+
+```text
+dataset/labels/extra_test.json
+```
+
+该数据集特点：
+
+- 数量：`10` 张
+- 使用新的随机种子和新的编号范围生成
+- 不加入 `labels_clean.json`
+- 不加入 `labels_augmented.json`
+- 不加入 `train.json`、`val.json`、`test.json`
+- 不加入当前 mock OCR 的标签索引
+- 图片进行了轻量增强，包括亮度、对比度、噪声、部分模糊和 JPEG 压缩
+
+用途：
+
+```text
+检查系统是否真正使用 OCR/模型进行泛化识别。
+如果后端仍然只靠 mock OCR 标签匹配，上传该目录图片时不会返回对应真值结果。
+如果后端接入真实 OCR，则应该能够根据图片内容识别并提取字段。
+```

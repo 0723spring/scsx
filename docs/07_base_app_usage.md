@@ -75,6 +75,14 @@ dataset/generated/rotated/waybill_rotated_0001.png
 
 当前 base 版本可以上传 rotated 图片，但由于旋转样本的 box 未重新计算，图片脱敏定位不作为最终效果评估。后续如果实现 `backend/preprocess.py` 图像校正模块，再用 rotated 数据测试校正前后的 OCR 和字段提取效果。
 
+额外独立测试图片位于：
+
+```text
+dataset/test/waybill_extra_test_0001.png
+```
+
+注意：`dataset/test/` 不加入当前 mock OCR 标签索引。也就是说，如果后端仍然只使用 mock OCR，上传这些图片不会得到对应真值结果；它们主要用于后续验证真实 OCR 或模型泛化识别能力。
+
 ## 5. 已实现接口
 
 ### GET /api/health

@@ -79,7 +79,7 @@ express_waybill_ocr/
 - 批量生成虚拟快递面单
 - 导出 JSON 或下载脱敏图片
 
-## 虚拟快递面单生成
+## 虚拟快递面单生成（已经做好了）
 
 模板图片放置位置：
 
@@ -123,6 +123,12 @@ python scripts/generate_waybills.py --make-dataset --seed 20260713
 python scripts/generate_waybills.py --make-rotated --rotated-count 60 --seed 20260713
 ```
 
+生成 10 张独立额外测试图，专门用于检查是否真的使用 OCR/模型泛化识别：
+
+```bash
+python scripts/generate_waybills.py --make-extra-test --extra-test-count 10 --seed 20260714
+```
+
 图片输出目录：
 
 ```text
@@ -143,6 +149,7 @@ dataset/labels/labels.json
 - 如果中文字体加载失败，可以使用 `--font-path` 指定本机中文字体，例如 `C:/Windows/Fonts/msyh.ttc`。
 - 正式数据集生成记录见 [数据生成记录](docs/06_dataset_generation_record.md)。
 - `rotated/` 数据只用于图像校正和 OCR 鲁棒性测试，不混入主 train/val/test。
+- `dataset/test/` 是额外独立测试集，不加入 mock OCR 标签索引；如果仍使用 mock OCR，上传这些图片不会得到对应真值识别结果。
 
 ## 方向 2 增强说明
 
