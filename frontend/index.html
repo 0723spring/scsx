@@ -35,6 +35,7 @@
       <span id="serviceStatus" class="status-pill">检查服务中</span>
     </header>
 
+    <section id="mainView" class="app-view">
     <section class="workspace">
       <section class="panel upload-panel">
         <div class="panel-header">
@@ -45,6 +46,11 @@
         <label class="upload-box" for="fileInput">
           <input id="fileInput" type="file" accept="image/*">
           <span>选择快递面单图片</span>
+        </label>
+
+        <label class="option-toggle" for="enablePreprocess">
+          <input id="enablePreprocess" type="checkbox">
+          <span>图像校正</span>
         </label>
 
         <div class="preview-frame">
@@ -82,26 +88,68 @@
           <span>地址</span>
           <p id="receiverAddress">-</p>
         </div>
+
+        <section id="preprocessPanel" class="preprocess-panel is-hidden" aria-live="polite">
+          <div>
+            <span>校正状态</span>
+            <strong id="preprocessStatus">-</strong>
+          </div>
+          <div>
+            <span>旋转角度</span>
+            <strong id="preprocessAngle">-</strong>
+          </div>
+          <p id="preprocessMessage">-</p>
+        </section>
+
+        <div class="action-bar">
+          <button id="viewOcrBtn" class="secondary-btn" type="button" disabled>查看 OCR 文本</button>
+          <button id="viewMaskedBtn" class="secondary-btn" type="button" disabled>查看脱敏图片</button>
+          <button id="copyResultBtn" class="secondary-btn" type="button" disabled>复制结果</button>
+          <button id="downloadMaskedBtn" class="secondary-btn" type="button" disabled>下载脱敏图</button>
+          <button id="exportJsonBtn" class="secondary-btn" type="button" disabled>导出 JSON</button>
+          <button id="clearBtn" class="ghost-btn" type="button" disabled>清空</button>
+        </div>
       </section>
     </section>
+    </section>
 
-    <section class="workspace lower-workspace">
-      <section class="panel">
-        <div class="panel-header">
+    <section id="ocrView" class="app-view detail-view is-hidden">
+      <div class="detail-toolbar">
+        <button id="backFromOcrBtn" class="ghost-btn" type="button">返回识别结果</button>
+      </div>
+      <section class="panel detail-panel">
+        <div class="panel-header detail-header">
           <h2>OCR 文本</h2>
+          <span class="muted">展示后端返回的完整 OCR 原文</span>
         </div>
         <ul id="ocrList" class="ocr-list">
           <li>暂无 OCR 文本</li>
         </ul>
       </section>
+    </section>
 
-      <section class="panel">
-        <div class="panel-header">
+    <section id="maskedView" class="app-view detail-view is-hidden">
+      <div class="detail-toolbar">
+        <button id="backFromMaskedBtn" class="ghost-btn" type="button">返回识别结果</button>
+      </div>
+      <section class="panel detail-panel">
+        <div class="panel-header detail-header">
           <h2>脱敏图片</h2>
+          <span class="muted">查看已遮挡敏感信息的图片</span>
         </div>
         <div class="preview-frame masked-frame">
           <img id="maskedPreview" alt="脱敏图片预览">
           <p id="emptyMasked">识别后显示脱敏图片</p>
+        </div>
+      </section>
+
+      <section id="preprocessedPanel" class="panel preprocessed-panel detail-panel is-hidden">
+        <div class="panel-header">
+          <h2>校正图片</h2>
+        </div>
+        <div class="preview-frame compact-frame">
+          <img id="preprocessedPreview" alt="校正图片预览">
+          <p id="emptyPreprocessed">启用后显示校正图片</p>
         </div>
       </section>
     </section>

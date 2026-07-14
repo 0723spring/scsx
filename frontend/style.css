@@ -91,8 +91,26 @@ body {
   gap: 18px;
 }
 
-.lower-workspace {
-  margin-top: 18px;
+.app-view {
+  min-width: 0;
+}
+
+.detail-view {
+  display: grid;
+  gap: 14px;
+}
+
+.detail-toolbar {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.detail-panel {
+  width: 100%;
+}
+
+.detail-header {
+  align-items: flex-start;
 }
 
 .panel {
@@ -137,6 +155,43 @@ body {
   background: #b6c3d6;
 }
 
+.secondary-btn,
+.ghost-btn {
+  min-height: 36px;
+  border-radius: 6px;
+  padding: 0 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  border: 1px solid #9fb2cf;
+  background: #ffffff;
+  color: #1d4ed8;
+}
+
+.secondary-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: #eff6ff;
+}
+
+.ghost-btn {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--muted);
+}
+
+.ghost-btn:hover:not(:disabled) {
+  color: var(--text);
+  background: #f8fafc;
+}
+
+.secondary-btn:disabled,
+.ghost-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
 .upload-box {
   display: flex;
   align-items: center;
@@ -151,6 +206,23 @@ body {
 
 .upload-box input {
   display: none;
+}
+
+.option-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  margin-top: 12px;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.option-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
 }
 
 .preview-frame {
@@ -184,6 +256,14 @@ body {
 
 .masked-frame {
   min-height: 420px;
+}
+
+.compact-frame {
+  min-height: 320px;
+}
+
+.is-hidden {
+  display: none !important;
 }
 
 .muted {
@@ -234,6 +314,51 @@ dd,
   margin-top: 12px;
 }
 
+.preprocess-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #b7d4f5;
+  border-radius: 8px;
+  background: #f5faff;
+}
+
+.preprocess-panel div {
+  min-width: 0;
+}
+
+.preprocess-panel span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.preprocess-panel strong {
+  display: block;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.35;
+  word-break: break-all;
+}
+
+.preprocess-panel p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.action-bar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
 .ocr-list {
   display: grid;
   gap: 10px;
@@ -261,5 +386,10 @@ dd,
 
   .app-header {
     display: grid;
+  }
+
+  .action-bar,
+  .preprocess-panel {
+    grid-template-columns: 1fr;
   }
 }
