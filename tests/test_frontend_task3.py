@@ -113,9 +113,10 @@ def test_frontend_appends_preprocess_form_field() -> None:
     assert 'formData.append("enable_preprocess"' in app_js
 
 
-def test_frontend_has_button_motion_styles() -> None:
+def test_frontend_removes_button_motion_styles() -> None:
+    html = (PROJECT_ROOT / "frontend" / "index.html").read_text(encoding="utf-8")
     css = (PROJECT_ROOT / "frontend" / "style.css").read_text(encoding="utf-8")
 
-    assert "@keyframes button-pop" in css
-    assert ".motion-btn:hover:not(:disabled)" in css
-    assert "@media (prefers-reduced-motion: reduce)" in css
+    assert "motion-btn" not in html
+    assert "motion-btn" not in css
+    assert "@keyframes button-pop" not in css

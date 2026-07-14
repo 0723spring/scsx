@@ -155,41 +155,6 @@ body {
   background: #b6c3d6;
 }
 
-.motion-btn {
-  transform: scale(1);
-  transform-origin: center;
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    border-color 160ms ease,
-    background-color 160ms ease;
-}
-
-.motion-btn:hover:not(:disabled) {
-  animation: button-pop 220ms ease-out;
-  transform: scale(1.04);
-  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.16);
-}
-
-.motion-btn:active:not(:disabled) {
-  transform: scale(0.98);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
-}
-
-@keyframes button-pop {
-  0% {
-    transform: scale(1);
-  }
-
-  58% {
-    transform: scale(1.07);
-  }
-
-  100% {
-    transform: scale(1.04);
-  }
-}
-
 .secondary-btn,
 .ghost-btn {
   min-height: 36px;
@@ -426,15 +391,5 @@ dd,
   .action-bar,
   .preprocess-panel {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .motion-btn,
-  .motion-btn:hover:not(:disabled),
-  .motion-btn:active:not(:disabled) {
-    animation: none;
-    transform: none;
-    transition: none;
   }
 }
