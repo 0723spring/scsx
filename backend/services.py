@@ -14,15 +14,25 @@ from pathlib import Path
 from .extractor import extract_fields
 from .masker import mask_sensitive_info
 from .ocr_service import run_ocr
+from .preprocess import preprocess_image
 
 
-def recognize_waybill(image_path: str | Path, original_filename: str | None = None) -> dict:
-    ocr_results = run_ocr(image_path, original_filename=original_filename)
+def recognize_waybill(
+    image_path: str | Path,
+    original_filename: str | None = None,
+    enable_preprocess: bool = False,
+) -> dict:
+    preprocess_result = preprocess_image(image_path, enable_preprocess=enable_preprocess)
+    ocr_image_path = preprocess_result["image_path"]
+
+    ocr_results = run_ocr(ocr_image_path, original_filename=original_filename)
     fields = extract_fields(ocr_results)
-    masked_image_url = mask_sensitive_info(image_path, ocr_results, fields)
+    masked_image_url = mask_sensitive_info(ocr_image_path, ocr_results, fields)
 
     return {
         "fields": fields,
         "ocr_results": ocr_results,
         "masked_image_url": masked_image_url,
+        "preprocessed_image_url": preprocess_result["preprocessed_image_url"],
+        "preprocess": preprocess_result["preprocess"],
     }

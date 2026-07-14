@@ -14,7 +14,7 @@
 
 import time
 
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -50,11 +50,18 @@ def health() -> dict:
 
 
 @app.post("/api/recognize")
-async def recognize(file: UploadFile = File(...)) -> JSONResponse:
+async def recognize(
+    file: UploadFile = File(...),
+    enable_preprocess: bool = Form(False),
+) -> JSONResponse:
     started_at = time.perf_counter()
     try:
         image_path, original_filename = await save_upload_file(file)
-        result = recognize_waybill(image_path, original_filename=original_filename)
+        result = recognize_waybill(
+            image_path,
+            original_filename=original_filename,
+            enable_preprocess=enable_preprocess,
+        )
         fields = result["fields"]
         message = "识别成功"
         if any(fields.get(key) is None for key in ["receiver_name", "raw_phone", "address", "tracking_number"]):
@@ -65,6 +72,8 @@ async def recognize(file: UploadFile = File(...)) -> JSONResponse:
             **fields,
             "ocr_texts": result["ocr_results"],
             "masked_image_url": result["masked_image_url"],
+            "preprocessed_image_url": result["preprocessed_image_url"],
+            "preprocess": result["preprocess"],
             "processing_time_ms": elapsed_ms,
         }
         return JSONResponse(success_response(message, data))

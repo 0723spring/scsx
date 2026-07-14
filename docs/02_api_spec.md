@@ -292,8 +292,40 @@ if (!result.success) {
   throw new Error(result.message);
 }
 
-renderRecognitionResult(result.data);
+    renderRecognitionResult(result.data);
 ```
+
+## 10. 图像预处理参数补充
+
+`POST /api/recognize` 支持可选表单参数：
+
+| 参数 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| enable_preprocess | boolean | 否 | 是否启用图像倾斜校正，默认 `false` |
+
+请求示例：
+
+```javascript
+const formData = new FormData();
+formData.append("file", selectedFile);
+formData.append("enable_preprocess", "true");
+```
+
+返回结果中新增：
+
+```json
+{
+  "preprocessed_image_url": "/outputs/preprocessed_xxx.png",
+  "preprocess": {
+    "enabled": true,
+    "applied": true,
+    "angle": -2.0,
+    "message": "deskew correction applied"
+  }
+}
+```
+
+字段结果中同时包含脱敏值和原始值，例如 `phone/raw_phone`、`address/raw_address`、`tracking_number/raw_tracking_number`。前端展示时建议优先展示脱敏值。
 
 ## 9. 后端处理伪代码
 

@@ -142,3 +142,9 @@ dataset/labels/labels.json
 - 如果中文字体加载失败，可以使用 `--font-path` 指定本机中文字体，例如 `C:/Windows/Fonts/msyh.ttc`。
 - 正式数据集生成记录见 [数据生成记录](docs/06_dataset_generation_record.md)。
 - `rotated/` 数据只用于图像校正和 OCR 鲁棒性测试，不混入主 train/val/test。
+
+## 方向 2 增强说明
+
+图像预处理、字段提取与脱敏方向的实现说明见：
+
+- [方向 2：图像预处理、字段提取与脱敏说明](docs/09_direction2_preprocess_extraction_masking.md)

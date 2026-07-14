@@ -38,7 +38,7 @@ def union_boxes(*boxes: list[int] | None) -> list[int] | None:
 @lru_cache(maxsize=1)
 def load_label_index() -> dict[str, dict[str, Any]]:
     index: dict[str, dict[str, Any]] = {}
-    for name in ["labels_clean.json", "labels_augmented.json", "labels.json"]:
+    for name in ["labels_clean.json", "labels_augmented.json", "labels_rotated.json", "labels.json"]:
         path = LABEL_DIR / name
         if not path.exists():
             continue
@@ -52,6 +52,7 @@ def load_label_index() -> dict[str, dict[str, Any]]:
 def label_to_ocr(label: dict[str, Any]) -> list[dict[str, Any]]:
     fields = label["fields"]
     boxes = label.get("main_boxes", {})
+    boxes_valid = label.get("metadata", {}).get("boxes_valid", True)
     receiver_identity_box = union_boxes(boxes.get("receiver_name"), boxes.get("receiver_phone"))
     sender_identity_box = union_boxes(boxes.get("sender_name"), boxes.get("sender_phone"))
 
@@ -68,7 +69,7 @@ def label_to_ocr(label: dict[str, Any]) -> list[dict[str, Any]]:
         results.append({
             "text": text,
             "confidence": confidence,
-            "box": to_quad(box) if box else None,
+            "box": to_quad(box) if box and boxes_valid else None,
         })
     return results
 

@@ -1,79 +1,107 @@
-"""字段提取文件。
+"""Rule-based field extraction from normalized OCR results."""
 
-文件职责：
-1. 接收 OCR 结果列表。
-2. 合并 OCR 文本，形成便于正则匹配的完整文本。
-3. 抽取收件人姓名 receiver_name。
-4. 抽取原始手机号 raw_phone。
-5. 调用脱敏规则生成 phone，例如 13812345678 -> 138****5678。
-6. 抽取地址 address。
-7. 抽取快递单号 tracking_number。
-8. 字段未识别时返回 None，不让整个识别流程失败。
-9. 后续可增加不同模板和不同快递公司的规则兜底。
-"""
+from __future__ import annotations
 
 import re
 
-from .masker import mask_phone
+from .masker import mask_address, mask_name, mask_phone, mask_tracking_number
 
 
 PHONE_PATTERN = re.compile(r"1[3-9]\d{9}")
-TRACKING_PATTERN = re.compile(r"(?:运单号|快递单号|单号)[:：]?\s*([A-Z]{0,4}\d{10,18})")
-RECEIVER_PATTERN = re.compile(r"(?:收方|收件人)[:：]\s*([\u4e00-\u9fa5]{2,4})")
-ADDRESS_PATTERN = re.compile(r"(?:收方地址|地址)[:：]\s*(.+)")
+TRACKING_PATTERN = re.compile(
+    r"(?:\u8fd0\u5355\u53f7|\u5feb\u9012\u5355\u53f7|\u5355\u53f7)"
+    r"[:\uff1a]?\s*([A-Z]{0,4}\d{10,18})",
+    re.IGNORECASE,
+)
+TRACKING_FALLBACK_PATTERN = re.compile(r"\b(?:[A-Z]{2,4})?\d{10,18}\b", re.IGNORECASE)
+RECEIVER_PATTERN = re.compile(
+    r"(?:\u6536\u65b9|\u6536\u4ef6\u4eba|\u6536\u8d27\u4eba|\u6536\u4ef6|\u59d3\u540d)"
+    r"[:\uff1a\s]*([\u4e00-\u9fff\u00b7]{2,8})"
+)
+ADDRESS_PATTERN = re.compile(
+    r"(?:\u6536\u65b9\u5730\u5740|\u6536\u4ef6\u5730\u5740|\u6536\u8d27\u5730\u5740|\u5730\u5740)"
+    r"[:\uff1a\s]*(.+)"
+)
+
+RECEIVER_KEYWORDS = ("\u6536\u65b9", "\u6536\u4ef6\u4eba", "\u6536\u8d27\u4eba", "\u6536\u4ef6")
+ADDRESS_KEYWORDS = ("\u6536\u65b9\u5730\u5740", "\u6536\u4ef6\u5730\u5740", "\u6536\u8d27\u5730\u5740", "\u5730\u5740")
 
 
 def normalize_texts(ocr_results: list[dict]) -> list[str]:
-    return [str(item.get("text", "")).strip() for item in ocr_results if item.get("text")]
+    return [
+        re.sub(r"\s+", " ", str(item.get("text", "")).strip())
+        for item in ocr_results
+        if item.get("text")
+    ]
+
+
+def _after_colon(text: str) -> str:
+    parts = re.split(r"[:\uff1a]", text, maxsplit=1)
+    return parts[1].strip() if len(parts) == 2 else text.strip()
 
 
 def extract_tracking_number(text: str) -> str | None:
     match = TRACKING_PATTERN.search(text)
     if match:
-        return match.group(1)
-    fallback = re.search(r"\b\d{12,18}\b", text)
-    return fallback.group(0) if fallback else None
+        return match.group(1).upper()
+
+    for match in TRACKING_FALLBACK_PATTERN.finditer(text):
+        value = match.group(0).upper()
+        if not PHONE_PATTERN.fullmatch(value):
+            return value
+    return None
 
 
 def extract_receiver_name(lines: list[str], full_text: str) -> str | None:
     for line in lines:
-        if ("收方" in line or "收件人" in line) and "地址" not in line and PHONE_PATTERN.search(line):
-            match = RECEIVER_PATTERN.search(line)
+        if any(keyword in line for keyword in RECEIVER_KEYWORDS) and "\u5730\u5740" not in line:
+            candidate = PHONE_PATTERN.sub("", _after_colon(line)).strip()
+            match = re.search(r"[\u4e00-\u9fff\u00b7]{2,8}", candidate)
             if match:
-                return match.group(1)
+                return match.group(0)
+
     match = RECEIVER_PATTERN.search(full_text)
     return match.group(1) if match else None
 
 
 def extract_receiver_address(lines: list[str], full_text: str) -> str | None:
     for line in lines:
-        if "收方地址" in line or line.startswith("地址"):
+        if any(keyword in line for keyword in ADDRESS_KEYWORDS) and "\u5bc4\u65b9" not in line:
             match = ADDRESS_PATTERN.search(line)
             if match:
                 return match.group(1).strip()
+
     match = ADDRESS_PATTERN.search(full_text)
     return match.group(1).strip() if match else None
+
+
+def extract_phone(lines: list[str], full_text: str) -> str | None:
+    for line in lines:
+        if any(keyword in line for keyword in RECEIVER_KEYWORDS) and "\u5730\u5740" not in line:
+            match = PHONE_PATTERN.search(line)
+            if match:
+                return match.group(0)
+
+    match = PHONE_PATTERN.search(full_text)
+    return match.group(0) if match else None
 
 
 def extract_fields(ocr_results: list[dict]) -> dict:
     lines = normalize_texts(ocr_results)
     full_text = "\n".join(lines)
-    raw_phone = None
 
-    for line in lines:
-        if "收方" in line or "收件人" in line:
-            match = PHONE_PATTERN.search(line)
-            if match:
-                raw_phone = match.group(0)
-                break
-    if not raw_phone:
-        match = PHONE_PATTERN.search(full_text)
-        raw_phone = match.group(0) if match else None
+    raw_name = extract_receiver_name(lines, full_text)
+    raw_phone = extract_phone(lines, full_text)
+    raw_address = extract_receiver_address(lines, full_text)
+    raw_tracking_number = extract_tracking_number(full_text)
 
     return {
-        "receiver_name": extract_receiver_name(lines, full_text),
-        "phone": mask_phone(raw_phone) if raw_phone else None,
+        "receiver_name": mask_name(raw_name),
+        "raw_receiver_name": raw_name,
+        "phone": mask_phone(raw_phone),
         "raw_phone": raw_phone,
-        "address": extract_receiver_address(lines, full_text),
-        "tracking_number": extract_tracking_number(full_text),
+        "address": mask_address(raw_address),
+        "raw_address": raw_address,
+        "tracking_number": mask_tracking_number(raw_tracking_number),
+        "raw_tracking_number": raw_tracking_number,
     }

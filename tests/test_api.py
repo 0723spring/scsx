@@ -1,8 +1,42 @@
-# 后端接口测试文件。
-#
-# 后续需要实现的功能：
-# 1. 测试 /api/health 是否正常返回。
-# 2. 测试 /api/recognize 上传图片后的成功响应。
-# 3. 测试上传非图片文件时的错误响应。
-# 4. 测试返回 JSON 是否包含约定字段。
-# 5. 测试 masked_image_url 是否存在。
+from io import BytesIO
+
+from fastapi.testclient import TestClient
+from PIL import Image
+
+from backend.main import app
+
+
+client = TestClient(app)
+
+
+def _image_bytes() -> bytes:
+    buffer = BytesIO()
+    Image.new("RGB", (120, 80), "white").save(buffer, format="PNG")
+    return buffer.getvalue()
+
+
+def test_health_endpoint():
+    response = client.get("/api/health")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["success"] is True
+    assert payload["data"]["status"] == "ok"
+
+
+def test_recognize_endpoint_accepts_preprocess_flag():
+    response = client.post(
+        "/api/recognize",
+        data={"enable_preprocess": "true"},
+        files={"file": ("waybill_clean_0001.png", _image_bytes(), "image/png")},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["success"] is True
+    data = payload["data"]
+    assert "preprocess" in data
+    assert data["preprocess"]["enabled"] is True
+    assert data["phone"] == "136****5423"
+    assert data["raw_phone"] == "13687105423"
+    assert data["masked_image_url"].startswith("/outputs/masked_")
